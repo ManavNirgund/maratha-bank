@@ -65,7 +65,7 @@ function CustomerLogin() {
         )
         .then((res) => {
           setIsSigninDisabled(false);
-          const token = res.data.access_token;
+          const token = res.data;
 
           console.log(token);
           localStorage.setItem("token", token);

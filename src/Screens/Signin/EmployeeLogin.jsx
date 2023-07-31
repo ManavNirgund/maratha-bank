@@ -42,11 +42,10 @@ function EmployeeLogin() {
   };
 
   const validationSchema = Yup.object({
-    username: Yup.string()
-      .required("Please enter your email"),
+    username: Yup.string().required("Please enter your email"),
     password: Yup.string()
       .required("Please enter your password")
-      .min(8, "Password should be at least 8 characters"),
+      .min(7, "Password should be at least 7 characters"),
   });
 
   const formik = useFormik({
@@ -55,18 +54,14 @@ function EmployeeLogin() {
     onSubmit: (values) => {
       setIsSigninDisabled(true);
       axios
-        .post(
-          "http://localhost:8081/employee/authenticate",
-          values,
-          {
-            headers: {
-              "Content-Type": "application/json"
-            },
-          }
-        )
+        .post("http://localhost:8081/employee/authenticate", values, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           setIsSigninDisabled(false);
-          const token = res.data.access_token;
+          const token = res.data;
 
           console.log(token);
           localStorage.setItem("token", token);
@@ -79,10 +74,11 @@ function EmployeeLogin() {
             localStorage.setItem("asAdmin", false);
           }
           formik.resetForm();
-          nav(redirectPath, { replace: true });
+          nav("/employee");
         })
         .catch((res) => {
           alert(res.response.data.message);
+          console.log(res);
           setIsSigninDisabled(false);
           formik.resetForm();
         });
@@ -126,7 +122,9 @@ function EmployeeLogin() {
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.username && formik.errors.username ? true : false
+                  formik.touched.username && formik.errors.username
+                    ? true
+                    : false
                 }
                 helperText={formik.touched.username && formik.errors.username}
                 InputProps={{

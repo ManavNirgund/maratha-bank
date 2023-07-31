@@ -9,6 +9,7 @@ import Transaction from "./Screens/Transaction/Transaction";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/Service/utilities/auth";
 import { RequireAuth } from "./components/Service/utilities/RequireAuth";
+import EmployeeScreen from "./Screens/Employee/EmployeeScreen";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
             element={
               <RequireAuth>
                 <Transaction />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/employee"
+            element={
+              <RequireAuth>
+                <EmployeeScreen />
               </RequireAuth>
             }
           />

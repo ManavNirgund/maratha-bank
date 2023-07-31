@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DahboardNav from "../../Components/DahboardNav/DahboardNav";
+import DahboardNav from "../../components/DahboardNav/DahboardNav";
 import { account } from "../../Assets/data/enums";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -25,17 +25,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import dashboardImage from "../../Assets/Images/dashboard.svg";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import AccountDetails from "../../components/Dashboard/AccountDetails";
 
 const Transaction = () => {
-  // useEffect(() => {
-  //   axios.get("http://localhost:8090/transaction/accounts", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     }
-  //   })
-  // }, [])
-
   useEffect(() => {
     const number = Math.floor(Math.random() * 9999999999) + 100;
     formikCreateTrasaction.setFieldValue("accountNumber", number.toString());
@@ -48,17 +40,34 @@ const Transaction = () => {
   const [isAddBalancePressed, setIsAddBalancePressed] = useState(false);
   const [isWithBalancePressed, setIsWithBalancePressed] = useState(false);
 
-  const [accounts, setAccounts] = useState(null);
+  const [account, setAccount] = useState(null);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
   const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/customer/account-details", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setAccount(res.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
   const transValues = {
     email: "",
     accountNumber: "",
-    accountType: account.SAVINGS,
+    // accountType: account.SAVINGS,
   };
 
   const addBalanceValues = {
@@ -604,47 +613,6 @@ const Transaction = () => {
         </Container>
       )}
 
-      {accounts && isAllUsersPressed && (
-        <TableContainer component={Paper} sx={{ backgroundColor: "#D9D9D9" }}>
-          <Table sx={tableStyle} aria-label="Table">
-            <TableHead>
-              <TableRow>
-                <TableCell sx={headerCellStyle}>ID</TableCell>
-                <TableCell sx={headerCellStyle}>Account Number</TableCell>
-                <TableCell sx={headerCellStyle}>Account Type</TableCell>
-                <TableCell sx={headerCellStyle}>Balance</TableCell>
-                <TableCell sx={headerCellStyle}>Joined on</TableCell>
-                <TableCell sx={headerCellStyle}>Email</TableCell>
-                <TableCell sx={headerCellStyle}>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {accounts.map((item) => (
-                <TableRow key={item.id}>
-                  {console.log(item.id)}
-                  <TableCell sx={cellStyle}>{item.id}</TableCell>
-                  <TableCell sx={cellStyle}>{item.accountNumber}</TableCell>
-                  <TableCell sx={cellStyle}>{item.accountType}</TableCell>
-                  <TableCell sx={cellStyle}>{item.balance}</TableCell>
-                  <TableCell sx={cellStyle}>{item.createdAt}</TableCell>
-                  <TableCell sx={cellStyle}>{item.email}</TableCell>
-                  <TableCell sx={cellStyle}>
-                    {/* <Button variant="outlined" sx={{ backgroundColor: "#FFC107", color: "#000" }}> */}
-                    <Button variant="contained" color="warning">
-                      Edit
-                    </Button>{" "}
-                    {/* <Button variant="outlined" sx={{ backgroundColor: "#DC3545", color: "#000" }}> */}
-                    <Button variant="contained" color="error">
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-
       {isWithBalancePressed && (
         <Container
           maxWidth="sm"
@@ -747,12 +715,11 @@ const Transaction = () => {
           </Box>
         </Container>
       )}
+
+      {account && <AccountDetails account={account} />}
+
+
       <DahboardNav />
-      {/* {isCreateTransPressed == false &&
-        isAddBalancePressed == false &&
-        isWithBalancePressed == false && (
-          <img src={dashboardImage} alt="Dashboard image" />
-        )} */}
     </div>
   );
 };
