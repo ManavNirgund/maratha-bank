@@ -4,6 +4,8 @@ import About from "./components/About/About";
 import LandingPage from "./Screens/LandingPage/LandingPage";
 import Signin from "./Screens/Signin/Signin";
 import Register from "./Screens/Signup/Register";
+import Products from "./Screens/Products/Products";
+import Transaction from "./Screens/Transaction/Transaction";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/Service/utilities/auth";
 import { RequireAuth } from "./components/Service/utilities/RequireAuth";
@@ -26,15 +28,15 @@ function App() {
               </RequireAuth>
             }
           />
-          {/* <Route
+          <Route
             path="/transaction"
             element={
               <RequireAuth>
                 <Transaction />
               </RequireAuth>
             }
-          ></Route>
-          <Route
+          />
+          {/* <Route
             path="/loan"
             element={
               <RequireAuth>
