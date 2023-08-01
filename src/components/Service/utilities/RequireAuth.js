@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router";
 import { useAuth } from "./auth";
+import { toast } from "react-toastify";
 
 export const RequireAuth = ({ children }) => {
   const location = useLocation();
@@ -8,7 +9,6 @@ export const RequireAuth = ({ children }) => {
   console.log("Token: ", auth.jwt);
 
   if (!auth.jwt) {
-    alert("Please log in");
     return (
       <Navigate to="/signin" state={{ path: location.pathname }} />
     );

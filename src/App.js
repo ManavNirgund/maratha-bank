@@ -1,4 +1,3 @@
-import "./App.css";
 import Header from "./components/Header/Header";
 import About from "./components/About/About";
 import LandingPage from "./Screens/LandingPage/LandingPage";
@@ -10,6 +9,12 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/Service/utilities/auth";
 import { RequireAuth } from "./components/Service/utilities/RequireAuth";
 import EmployeeScreen from "./Screens/Employee/EmployeeScreen";
+import AdminDashboard from "./components/Dashboard/admin/AdminDashboard";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css"; // Import the default stylesheet
+import "./App.css";
+import Loan from "./Screens/Loan/Loan";
 
 function App() {
   return (
@@ -45,7 +50,15 @@ function App() {
               </RequireAuth>
             }
           />
-          {/* <Route
+          <Route
+            path="/admin"
+            element={
+              <RequireAuth>
+                <AdminDashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/loan"
             element={
               <RequireAuth>
@@ -53,23 +66,23 @@ function App() {
               </RequireAuth>
             }
           ></Route>
-          <Route
+          {/* <Route
             path="/credit"
             element={
               <RequireAuth>
                 <CreditCard />
               </RequireAuth>
             }
-          ></Route>
-          <Route
+          ></Route> */}
+          {/* <Route
             path="/gift"
             element={
               <RequireAuth>
                 <GiftCard />
               </RequireAuth>
             }
-          ></Route>
-          <Route
+          ></Route> */}
+          {/* <Route
             path="/locker"
             element={
               <RequireAuth>
@@ -79,6 +92,7 @@ function App() {
           ></Route> */}
         </Routes>
         <About />
+        <ToastContainer />
       </AuthProvider>
     </div>
   );

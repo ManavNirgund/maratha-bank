@@ -77,7 +77,7 @@ function AdminLogin() {
             localStorage.setItem("asAdmin", false);
           }
           formik.resetForm();
-          nav(redirectPath, { replace: true });
+          nav("/admin", { replace: true });
         })
         .catch((error) => {
           alert(error.response.data.message);

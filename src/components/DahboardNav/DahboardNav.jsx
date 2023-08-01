@@ -114,7 +114,6 @@ const DashboardNav = () => {
           </Table>
         </TableContainer>
       )}
-      <img src={dashboardImage} alt="Dashboard Image"/>
     </div>
   );
 };

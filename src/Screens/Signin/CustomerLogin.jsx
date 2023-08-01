@@ -78,7 +78,7 @@ function CustomerLogin() {
             localStorage.setItem("asAdmin", false);
           }
           formik.resetForm();
-          nav(redirectPath, { replace: true });
+          nav("/transaction", { replace: true });
         })
         .catch((res) => {
           alert(res.response.data.message);

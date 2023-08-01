@@ -19,9 +19,9 @@ const ApproveAccount = () => {
 
   const formik = useFormik({
     initialValues: {
-      id: "",
+      accid: "",
     },
-    onsubmit: (values) => {
+    onSubmit: (values) => {
       setIsApproveDisabled(true);
       console.log(values);
       axios
@@ -32,13 +32,15 @@ const ApproveAccount = () => {
           },
         })
         .then((res) => {
-          isApproveDisabled(false);
+          setIsApproveDisabled(false);
           alert(`${res.data}`);
-          console.log(error)
+          console.log(res);
           formik.resetForm();
         })
         .catch((error) => {
+          setIsApproveDisabled(false);
           alert(error);
+          console.log(error);
           formik.resetForm();
         });
     },
@@ -76,9 +78,10 @@ const ApproveAccount = () => {
                 fullWidth
                 required
                 label="Account ID"
+                id="accid"
                 type="text"
-                name="accountId"
-                value={formik.values.accountId}
+                name="accid"
+                value={formik.values.accid}
                 onChange={formik.handleChange}
               />
             </Grid>
