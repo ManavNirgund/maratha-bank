@@ -29,6 +29,12 @@ export const account = {
   LOAN: "Loan",
 };
 
+export const creditCards = {
+  VISA: "VISA",
+  MASTERCARD: "MASTERCARD",
+  RUPAY: "RUPAY"
+}
+
 export const giftCards = {
   AMAZON: "AMAZON",
   STARBUCKS: "STARBUCKS",

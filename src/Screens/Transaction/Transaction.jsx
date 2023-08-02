@@ -106,7 +106,9 @@ const Transaction = () => {
   });
 
   const validationSchemaAddBalance = Yup.object({
-    username: Yup.string().required("Please enter the account ID."),
+    username: Yup.string()
+      .required("Please enter the account ID.")
+      .min(3, "Please enter minimum of 3 character"),
     amount: Yup.number()
       .required("Please enter an amount you wish to deposit.")
       .min(0, "Please enter a positive value"),

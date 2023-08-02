@@ -7,11 +7,11 @@ const AccountDetails = ({ account }) => {
       sx={{
         maxWidth: 350,
         margin: "auto",
-        backgroundColor: "rgba(255, 3, 122, 0.8)",
+        backgroundColor: "rgba(173, 2, 80, 0.85)",
       }}
     >
       <CardContent>
-        <Typography>{`${account}`}</Typography>
+        <Typography color="white" fontWeight="bold">{`${account}`}</Typography>
       </CardContent>
     </Card>
   );

@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the default stylesheet
 import "./App.css";
 import Loan from "./Screens/Loan/Loan";
+import CreditCard from "./Screens/CreditCard/CreditCard";
 
 function App() {
   return (
@@ -66,14 +67,14 @@ function App() {
               </RequireAuth>
             }
           ></Route>
-          {/* <Route
+          <Route
             path="/credit"
             element={
               <RequireAuth>
                 <CreditCard />
               </RequireAuth>
             }
-          ></Route> */}
+          ></Route>
           {/* <Route
             path="/gift"
             element={

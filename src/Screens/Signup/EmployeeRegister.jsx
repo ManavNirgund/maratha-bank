@@ -8,13 +8,9 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useFormik } from "formik";
-import { roles, genders } from "../../Assets/data/enums";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -257,7 +253,7 @@ const EmployeeRegister = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} style={{ marginTop: "1rem" }}>
             <Button
               fullWidth
               variant="contained"
@@ -288,7 +284,7 @@ const EmployeeRegister = () => {
           </Grid>
           <Grid item xs={4}></Grid>
           <Grid item xs={12} display="flex" flexDirection="row">
-            <Typography variant="body2" align="center" sx={{ color: "white" }}>
+            <Typography variant="subtitle2" align="center" sx={{ color: "white" }}>
               Already have an account?{" "}
               <Link to="/signin" className="text-decoration-none">
                 Sign In
