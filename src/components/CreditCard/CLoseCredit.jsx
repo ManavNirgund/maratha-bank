@@ -17,7 +17,7 @@ const CLoseCredit = () => {
       console.log(values)
       axios.put(`http://localhost:8085/customer/creditcard/close-credit-card-request`, values, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json",   
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })

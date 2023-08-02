@@ -202,29 +202,6 @@ const CreditCard = () => {
         >
           Pay Credit
         </Button>
-        <Button
-          variant={isClosePressed === true ? "contained" : "outlined"}
-          onClick={() => {
-            setIsApplyCreditPressed(false);
-            setIsMakePaymentCreditPressed(false);
-            setIsPayCreditPressed(false);
-            setIsClosedPressed(true);
-          }}
-          sx={{
-            border: "2px solid #870040",
-            marginTop: "1vh",
-            marginRight: "8px",
-            marginBottom: "8px",
-            color: "black",
-            backgroundColor:
-              isClosePressed === true ? "antiquewhite" : "inherit",
-            "&:hover": {
-              border: "none",
-            },
-          }}
-        >
-          Close Card
-        </Button>
       </div>
       {isApplyCreditPressed && (
         <Container
@@ -416,8 +393,6 @@ const CreditCard = () => {
       )}
 
       {isPayCreditPressed && <PayCredit />}
-
-      {isClosePressed && <CLoseCredit />}
 
       <CreditCards />
       {isApplyCreditPressed == false &&
