@@ -7,10 +7,6 @@ import {
   MDBNavbarLink,
   MDBInputGroup,
   MDBInput,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
   MDBBtn,
   MDBContainer,
   MDBNavbarToggler,
@@ -68,21 +64,16 @@ export default function Header() {
             </MDBNavbarItem>
 
             <MDBNavbarItem>
-              {/* <MDBNavbarLink href="#">
-                    <Link to="about" smooth={true} duration={300} style={{color: "white"}}>
-                      About
-                    </Link>
-              </MDBNavbarLink> */}
               <ScrollToAbout />
             </MDBNavbarItem>
           </MDBNavbarNav>
           <MDBNavbarNav className="mx-auto">
-            <MDBNavbarItem>
+            {/* <MDBNavbarItem>
               <MDBInputGroup>
                 <MDBInput type="text" />
                 <MDBBtn>Search</MDBBtn>
               </MDBInputGroup>
-            </MDBNavbarItem>
+            </MDBNavbarItem> */}
           </MDBNavbarNav>
           <MDBNavbarNav>
             <MDBNavbarItem>

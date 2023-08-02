@@ -5,13 +5,6 @@ import {
   Container,
   Grid,
   TextField,
-  Paper,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Table,
   FormControl,
   InputLabel,
   Select,
@@ -27,6 +20,9 @@ import { creditCards } from "../../Assets/data/enums";
 import axios from "axios";
 import { toast } from "react-toastify";
 import CreditCards from "../../components/Dashboard/CreditCards";
+import "./CreditCard.css";
+import PayCredit from "../../components/CreditCard/PayCredit";
+import CLoseCredit from "../../components/CreditCard/CLoseCredit";
 
 const tableStyle = {
   minWidth: "650px",
@@ -49,34 +45,7 @@ const CreditCard = () => {
   const [isPayCreditPressed, setIsPayCreditPressed] = useState(false);
   const [isMakePaymentCreditPressed, setIsMakePaymentCreditPressed] =
     useState(false);
-
-  const [userType, setUserType] = useState("");
-  const [userTypes, setUserTypes] = useState("");
-  const [firstName, setFirstName] = useState("");
-
-  // useEffect(() => {
-  //   // Retrieve email and token from local storage
-  //   const email = localStorage.getItem("email");
-  //   const token = localStorage.getItem("token");
-
-  //   // Call the API using the retrieved email and token
-  //   axios.get(`http://localhost:8084/credit-cards`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     withCredentials: true,
-  //   })
-  //     .then((response) => response.data)
-  //     .then((data) => {
-  //       // Update the state with the API response
-  //       setFirstName(data.firstname);
-  //       setUserType(data.authorities[0].authority);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     });
-  // }, []);
+  const [isClosePressed, setIsClosedPressed] = useState();
 
   const token = localStorage.getItem("token");
 
@@ -118,25 +87,6 @@ const CreditCard = () => {
       });
   };
 
-  const payCredit = (values) => {
-    setIsSubmitDisabled(true);
-    axios
-      .post("http://localhost:8084/credit-cards/pay", values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setIsSubmitDisabled(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsSubmitDisabled(false);
-      });
-  };
-
   const formikApplyCredit = useFormik({
     initialValues: applyCreditValues,
     onSubmit: (values) => {
@@ -166,12 +116,6 @@ const CreditCard = () => {
     },
   });
 
-  const formikPayCredit = useFormik({
-    initialValues: payValues,
-    onSubmit: (values) => payCredit(values),
-    validationSchema: validationSchemaPay,
-  });
-
   const formikMakePaymentCredit = useFormik({
     initialValues: payValues,
     onSubmit: (values) => makePayment(values),
@@ -179,13 +123,21 @@ const CreditCard = () => {
   });
 
   return (
-    <div className="tabless">
+    <div
+      className={
+        isApplyCreditPressed || isMakePaymentCreditPressed || isPayCreditPressed
+          ? "cardimage"
+          : ""
+      }
+    >
       <div>
         <Button
           variant={isApplyCreditPressed === true ? "contained" : "outlined"}
           onClick={() => {
             setIsApplyCreditPressed(true);
+            setIsPayCreditPressed(false);
             setIsMakePaymentCreditPressed(false);
+            setIsClosedPressed(false);
           }}
           sx={{
             border: "2px solid #870040",
@@ -203,10 +155,14 @@ const CreditCard = () => {
           Apply for credit card
         </Button>
         <Button
-          variant={isMakePaymentCreditPressed === true ? "contained" : "outlined"}
+          variant={
+            isMakePaymentCreditPressed === true ? "contained" : "outlined"
+          }
           onClick={() => {
             setIsApplyCreditPressed(false);
+            setIsPayCreditPressed(false);
             setIsMakePaymentCreditPressed(true);
+            setIsClosedPressed(false);
           }}
           sx={{
             border: "2px solid #870040",
@@ -215,13 +171,59 @@ const CreditCard = () => {
             marginBottom: "8px",
             color: "black",
             backgroundColor:
-            isMakePaymentCreditPressed === true ? "antiquewhite" : "inherit",
+              isMakePaymentCreditPressed === true ? "antiquewhite" : "inherit",
             "&:hover": {
               border: "none",
             },
           }}
         >
           Pay
+        </Button>
+        <Button
+          variant={isPayCreditPressed === true ? "contained" : "outlined"}
+          onClick={() => {
+            setIsApplyCreditPressed(false);
+            setIsMakePaymentCreditPressed(false);
+            setIsPayCreditPressed(true);
+            setIsClosedPressed(false);
+          }}
+          sx={{
+            border: "2px solid #870040",
+            marginTop: "1vh",
+            marginRight: "8px",
+            marginBottom: "8px",
+            color: "black",
+            backgroundColor:
+              isPayCreditPressed === true ? "antiquewhite" : "inherit",
+            "&:hover": {
+              border: "none",
+            },
+          }}
+        >
+          Pay Credit
+        </Button>
+        <Button
+          variant={isClosePressed === true ? "contained" : "outlined"}
+          onClick={() => {
+            setIsApplyCreditPressed(false);
+            setIsMakePaymentCreditPressed(false);
+            setIsPayCreditPressed(false);
+            setIsClosedPressed(true);
+          }}
+          sx={{
+            border: "2px solid #870040",
+            marginTop: "1vh",
+            marginRight: "8px",
+            marginBottom: "8px",
+            color: "black",
+            backgroundColor:
+              isClosePressed === true ? "antiquewhite" : "inherit",
+            "&:hover": {
+              border: "none",
+            },
+          }}
+        >
+          Close Card
         </Button>
       </div>
       {isApplyCreditPressed && (
@@ -239,7 +241,7 @@ const CreditCard = () => {
             className="mt-5 p-5 pt-5"
             onSubmit={formikApplyCredit.handleSubmit}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={2} direction="column">
               <Grid item xs={12} sm={6}>
                 <FormControl
                   fullWidth
@@ -376,7 +378,7 @@ const CreditCard = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   type="submit"
                   startIcon={<PersonAdd />}
@@ -387,7 +389,7 @@ const CreditCard = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="warning"
                   onClick={() => formikMakePaymentCredit.resetForm()}
                 >
@@ -397,7 +399,7 @@ const CreditCard = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="error"
                   startIcon={<DeleteIcon />}
                   onClick={() => {
@@ -412,6 +414,11 @@ const CreditCard = () => {
           </Box>
         </Container>
       )}
+
+      {isPayCreditPressed && <PayCredit />}
+
+      {isClosePressed && <CLoseCredit />}
+
       <CreditCards />
       {isApplyCreditPressed == false &&
         isMakePaymentCreditPressed == false &&
