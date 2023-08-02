@@ -1,0 +1,4 @@
+.transaction-image {
+    background-image: url("../../Assets/Images/dashboard.svg");
+    min-height: 100vh;
+}

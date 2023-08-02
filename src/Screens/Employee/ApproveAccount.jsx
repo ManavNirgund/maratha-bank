@@ -39,7 +39,7 @@ const ApproveAccount = () => {
         })
         .catch((error) => {
           setIsApproveDisabled(false);
-          alert(error);
+          alert("Account", error);
           console.log(error);
           formik.resetForm();
         });

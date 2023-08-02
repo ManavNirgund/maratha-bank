@@ -42,6 +42,12 @@ export const giftCards = {
   GOOGLE_PLAY: "GOOGLE_PLAY"
 }
 
+export const lockerSizes = {
+  SMALL: "SMALL",
+  MEDIUM: "MEDIUM",
+  LARGE: "LARGE",
+}
+
 export const products = [
   { id: 1, name: "Transaction", icon: <AccountBalanceIcon style={{marginTop: "10px", fontSize:"38px"}}/>, to: "/transaction" },
   { id: 2, name: "Loan", icon: <CurrencyRupeeIcon style={{marginTop: "10px", fontSize:"38px"}} />, to: "/loan" },

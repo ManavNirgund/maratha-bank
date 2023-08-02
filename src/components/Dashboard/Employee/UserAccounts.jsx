@@ -32,7 +32,17 @@ const UserAccounts = () => {
   return (
     <div>
       {accounts ? (
-        <Table>
+        <Table
+        className="mt-3"
+        sx={{
+          minWidth: 650,
+          backgroundColor: "rgba(136, 136, 136, 0.9)",
+          color: "#fff",
+          borderRadius: "10px",
+          maxWidth: "90vw",
+          margin: "0 auto",
+        }}
+      >
           <TableHead>
             <TableRow>
               <TableCell>Account ID</TableCell>

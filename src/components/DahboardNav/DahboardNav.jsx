@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Paper,
   TableBody,
   TableCell,
@@ -8,11 +7,12 @@ import {
   TableHead,
   TableRow,
   Table,
+  Typography,
 } from "@mui/material";
 
 import "./DashboardNav.css";
 import axios from "axios";
-import dashboardImage from "../../Assets/Images/dashboard.svg";
+import { Card } from "react-bootstrap";
 
 const tableStyle = {
   minWidth: "650px",
@@ -30,89 +30,83 @@ const headerCellStyle = {
 };
 
 const DashboardNav = () => {
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [userType, setUserType] = useState("");
-
-  const [userTypes, setUserTypes] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [transaction, setTransaction] = useState(null);
 
-  // useEffect(() => {
-  //   // Retrieve email and token from local storage
-  //   const email = localStorage.getItem("email");
-  //   const token = localStorage.getItem("token");
+  useEffect(() => {
+    // Call the API using the retrieved email and token
+    axios
+      .get(
+        `http://localhost:8082/customer/transaction/show-all-my-transactions`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setTransaction(res.data);
+        console.log(res.data);
+      })
 
-  //   // Call the API using the retrieved email and token
-  //   axios.get(`http://localhost:8080/user/email/${email}`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     withCredentials: true,
-  //   })
-  //     .then((response) => response.data)
-  //     .then((data) => {
-  //       // Update the state with the API response
-  //       setFirstName(data.firstname);
-  //       // setUserType(data.authorities[0].authority);
-  //       setUserType("CUSTOMER")
-  //     })
-
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     });
-  // }, []);
-
-
-  const handleButtonClick = (buttonId) => {
-    setSelectedButton(buttonId);
-    console.log(buttonId, ": clicked");
-  };
+      .catch((error) => {
+        console.error("Error fetching API data:", error);
+      });
+  }, []);
 
   return (
-    <div className="tabless">
-      {/* Conditionally render the tables based on user role */}
-      {/* {userType === "CUSTOMER" ? customerTable : adminTable} */}
-
-      {transaction && (
-        <TableContainer component={Paper} sx={{ backgroundColor: "#D9D9D9" }}>
-          <Table sx={tableStyle} aria-label="Table">
+    <div>
+      {transaction ? (
+        <TableContainer component={Paper}>
+          <Table
+            className="mb-3"
+            sx={{
+              minWidth: 650,
+              backgroundColor: "#888",
+              color: "#fff",
+              borderRadius: "10px",
+              maxWidth: "90vw",
+              margin: "0 auto",
+            }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={headerCellStyle}>ID</TableCell>
-                <TableCell sx={headerCellStyle}>Account Number</TableCell>
-                <TableCell sx={headerCellStyle}>Account Type</TableCell>
-                <TableCell sx={headerCellStyle}>Balance</TableCell>
-                <TableCell sx={headerCellStyle}>Joined on</TableCell>
-                <TableCell sx={headerCellStyle}>Email</TableCell>
-                <TableCell sx={headerCellStyle}>Action</TableCell>
+                <TableCell sx={headerCellStyle}>Date</TableCell>
+                <TableCell sx={headerCellStyle}>Time</TableCell>
+                <TableCell sx={headerCellStyle}>Amount</TableCell>
+                <TableCell sx={headerCellStyle}>Description</TableCell>
+                <TableCell sx={headerCellStyle}>Type</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {transaction.map((item) => (
-                <TableRow key={item.id}>
-                  {console.log(item.id)}
-                  <TableCell sx={cellStyle}>{item.id}</TableCell>
-                  <TableCell sx={cellStyle}>{item.accountNumber}</TableCell>
-                  <TableCell sx={cellStyle}>{item.accountType}</TableCell>
-                  <TableCell sx={cellStyle}>{item.balance}</TableCell>
-                  <TableCell sx={cellStyle}>{item.createdAt}</TableCell>
-                  <TableCell sx={cellStyle}>{item.email}</TableCell>
-                  <TableCell sx={cellStyle}>
-                    {/* <Button variant="outlined" sx={{ backgroundColor: "#FFC107", color: "#000" }}> */}
-                    <Button variant="contained" color="warning">
-                      Edit
-                    </Button>{" "}
-                    {/* <Button variant="outlined" sx={{ backgroundColor: "#DC3545", color: "#000" }}> */}
-                    <Button variant="contained" color="error">
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {transaction.map((item) => {
+                let [date, time] = new Date(item.datetime)
+                  .toLocaleString()
+                  .split(", ");
+                return (
+                  <TableRow key={item.id}>
+                    {console.log(item.id)}
+                    <TableCell sx={cellStyle}>{item.transactionid}</TableCell>
+                    <TableCell sx={cellStyle}>{date}</TableCell>
+                    <TableCell sx={cellStyle}>{time}</TableCell>
+                    <TableCell sx={cellStyle}>{item.amount}</TableCell>
+                    <TableCell sx={cellStyle}>{item.description}</TableCell>
+                    <TableCell sx={cellStyle}>{item.transactiontype}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        <Card className="mb-3">
+          <Typography variant="h4" color="black" fontWeight="bold">
+            No transaction found! You can add new transactions buy depositing
+            money from "Add Balance" button!
+          </Typography>
+        </Card>
       )}
     </div>
   );

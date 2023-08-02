@@ -8,6 +8,7 @@ import Transaction from "./Screens/Transaction/Transaction";
 import EmployeeScreen from "./Screens/Employee/EmployeeScreen";
 import AdminDashboard from "./components/Dashboard/admin/AdminDashboard";
 import GiftCard from "./Screens/GiftCard/GiftCard";
+import Locker from "./Screens/Locker/Locker";
 
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/Service/utilities/auth";
@@ -85,14 +86,14 @@ function App() {
               </RequireAuth>
             }
           />
-          {/* <Route
+          <Route
             path="/locker"
             element={
               <RequireAuth>
                 <Locker />
               </RequireAuth>
             }
-          ></Route> */}
+          ></Route>
         </Routes>
         <About />
         <ToastContainer />

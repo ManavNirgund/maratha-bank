@@ -455,12 +455,12 @@ const Transaction = () => {
           )}
         </Grid>
       </Grid>
+      <DahboardNav />
       {pdfData ? (
         <PDFViewer pdfData={pdfData} />
       ) : (
         <Typography variant="h6">Loading pdf</Typography>
       )}
-      <DahboardNav />
     </div>
   );
 };
