@@ -5,7 +5,6 @@ import { products } from "../../Assets/data/enums";
 import { Link, useLocation } from "react-router-dom";
 
 import bank from "../../Assets/Images/bank.svg";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { Product } from "../Products/ProductsItem";
 import { appName } from "../../Assets/data/enums";
 
@@ -28,42 +27,20 @@ function LandingPage() {
             </p>
           </Col>
         </Row>
-        {/* <Grid container spacing={5}>
-          <Grid item sm={3}>
-            <Card>
-              <CreditCardIcon/>
-              Credit Cards</Card>
-          </Grid>
-          <Grid item sm={3}>
-            <Card>Personal Loan</Card>
-          </Grid>
-          <Grid item sm={3}>
-            <Card>Car Loan</Card>
-          </Grid>
-          <Grid item sm={3}>
-            <Card>Mututal Find SIP</Card>
-          </Grid>
-        </Grid> */}
 
         <div
           style={{
             display: "flex",
-            overflowX: "scroll",
-            msOverflowStyle: "none",
             flexDirection: "column",
-            alignItems: "center",
+            // alignItems: "center",
           }}
         >
-          <img src={bank} width="500vw" height="auto" />
-          <Typography
-            variant="h4"
-            color="black"
-            sx={{ textAlign: "left" }}
-          >
+          {/* <img src={bank} width="500vw" height="auto" /> */}
+          <Typography variant="h4" color="black" sx={{ textAlign: "left" }}>
             {" "}
             Products{" "}
           </Typography>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div className="product-container">
             {products.map((item) => {
               return (
                 <Product

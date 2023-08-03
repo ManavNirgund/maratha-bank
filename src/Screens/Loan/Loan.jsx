@@ -30,6 +30,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import Loans from "../../components/Dashboard/Loans";
+import PayLoan from "../../components/Loan/PayLoan";
 
 const tableStyle = {
   minWidth: "650px",
@@ -49,31 +50,11 @@ const Loan = () => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [isCreateLoanPressed, setIsCreateLoanPressed] = useState(false);
   const [isSigninDisabled, setIsSigninDisabled] = useState(false);
-  const [tableData, setTableableData] = useState();
+  const [isPayLoanPressed, setPayLoanPressed] = useState(false);
 
   const [userType, setUserType] = useState("");
   const [userTypes, setUserTypes] = useState("");
   const [firstName, setFirstName] = useState("");
-
-  const name = localStorage.getItem("name");
-
-  // useEffect(() => {
-  //  axios.get("http:localhost:8082/loans/status ", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     withCredentials: true,
-  //   })
-  //  .then((response) => response.data)
-  //     .then((data) => {
-  //       // Update the state with the API response
-  //       setTableableData(data.firstname);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     });
-  // }, [])
 
   const initialValues = {
     username: "",
@@ -153,6 +134,7 @@ const Loan = () => {
         onClick={() => {
           // handleButtonClick(1);
           setIsCreateLoanPressed(true);
+          setPayLoanPressed(false);
         }}
         sx={{
           border: "2px solid #870040",
@@ -163,6 +145,29 @@ const Loan = () => {
           fontSize: "1rem",
           backgroundColor:
             isCreateLoanPressed === true ? "antiquewhite" : "inherit",
+          "&:hover": {
+            border: "none",
+          },
+        }}
+      >
+        Apply for Loan
+      </Button>
+
+      <Button
+        variant={isPayLoanPressed === true ? "contained" : "outlined"}
+        onClick={() => {
+          setIsCreateLoanPressed(false);
+          setPayLoanPressed(true);
+        }}
+        sx={{
+          border: "2px solid #870040",
+          marginTop: "0.5rem",
+          marginBottom: "0.5rem",
+          marginRight: "8px",
+          color: "black",
+          fontSize: "1rem",
+          backgroundColor:
+            isPayLoanPressed === true ? "antiquewhite" : "inherit",
           "&:hover": {
             border: "none",
           },
@@ -312,6 +317,8 @@ const Loan = () => {
           </Box>
         </Container>
       )}
+
+      {isPayLoanPressed && <PayLoan />}
       <Loans />
       {isCreateLoanPressed == false && (
         <img src={dashboardImage} alt="Dashboard image" />

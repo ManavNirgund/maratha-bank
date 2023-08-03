@@ -34,14 +34,20 @@ const Customers = () => {
       });
   }, []);
 
-  
-  const deleteCustomer = (id) => {
-    if (!window.confirm('Are you sure to want to Delete this customer?')) {
-      toast.success("Customer not deleted")
+  const deleteCustomer = (accNumber) => {
+    if (!window.confirm("Are you sure to want to Delete this customer?")) {
+      toast.success("Customer not deleted");
       return null;
     }
-    axios.delete(`http://localhost:8081/employee/delete-customer`)
-  }
+    axios.delete(`http://localhost:8081/employee/delete-customer`, {
+      data: {
+        accno: accNumber,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  };
 
   return (
     <div style={{ marginBottom: "3rem" }}>
@@ -50,11 +56,9 @@ const Customers = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
+              <TableCell>Account Number</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Enabled?</TableCell>
-              <TableCell>Blocked?</TableCell>
-              <TableCell>Login Attempts</TableCell>
               <TableCell>Address</TableCell>
               <TableCell>Phone Number</TableCell>
               <TableCell>Action</TableCell>
@@ -64,13 +68,9 @@ const Customers = () => {
             {customers.map((customer) => (
               <TableRow key={customer.id}>
                 <TableCell>{customer.id}</TableCell>
+                <TableCell>{customer.accountNumber}</TableCell>
                 <TableCell>{customer.username}</TableCell>
                 <TableCell>{customer.email}</TableCell>
-                <TableCell>{customer.enabled ? "Yes" : "No"}</TableCell>
-                <TableCell>{customer.blocked ? "Yes" : "No"}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  {customer.loginAttempts}
-                </TableCell>
                 <TableCell>{customer.address}</TableCell>
                 <TableCell>{customer.phone}</TableCell>
                 <TableCell>
@@ -80,7 +80,7 @@ const Customers = () => {
                         variant="contained"
                         color="error"
                         onClick={() => {
-                          deleteCustomer(customer.id)
+                          deleteCustomer(customer.accountNumber);
                           console.log("delete pressed");
                         }}
                       >

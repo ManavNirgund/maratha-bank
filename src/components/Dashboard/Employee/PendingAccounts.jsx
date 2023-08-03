@@ -10,7 +10,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const PenfinLoans = () => {
+const PendingAccounts = () => {
   const [pendingAccounts, setPendingAccounts] = useState(null);
 
   useEffect(() => {
@@ -67,9 +67,11 @@ const PenfinLoans = () => {
             })}
           </TableBody>
         </Table>
-      ) : null}
+      ) : (
+        <Typography>No Pending Accounts Yet!</Typography>
+      )}
     </div>
   );
 };
 
-export default PenfinLoans;
+export default PendingAccounts;

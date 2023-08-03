@@ -2,10 +2,12 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import AllEmployees from "./AllEmployees";
 import Customers from "../Employee/Customers";
+import UserAccounts from "../Employee/UserAccounts";
 
 const AdminDashboard = () => {
   const [isEmployeePressed, setIsEmployeePressed] = useState(true);
   const [isCustomerPressed, setIsCustomerPressed] = useState(false);
+  const [isAllAccountsPressed, setIsAllAccountsPressed] = useState(false);
 
   return (
     <div>
@@ -15,6 +17,7 @@ const AdminDashboard = () => {
           onClick={() => {
             setIsEmployeePressed(true);
             setIsCustomerPressed(false);
+            setIsAllAccountsPressed(false);
           }}
           sx={{
             marginTop: "0.5rem",
@@ -41,6 +44,7 @@ const AdminDashboard = () => {
           onClick={() => {
             setIsCustomerPressed(true);
             setIsEmployeePressed(false);
+            setIsAllAccountsPressed(false);
           }}
           sx={{
             marginTop: "0.5rem",
@@ -62,10 +66,38 @@ const AdminDashboard = () => {
           {" "}
           Customers{" "}
         </Button>
+        <Button
+          variant={isAllAccountsPressed === true ? "contained" : "outlined"}
+          onClick={() => {
+            setIsCustomerPressed(false);
+            setIsEmployeePressed(false);
+            setIsAllAccountsPressed(true);
+          }}
+          sx={{
+            marginTop: "0.5rem",
+            marginBottom: "0.5rem",
+            marginRight: "8px",
+            color: "black",
+            border: "2px solid #870040",
+            fontSize: "1rem",
+            backgroundColor:
+              isAllAccountsPressed === true ? "antiquewhite" : "inherit",
+            "&:hover": {
+              border: "none",
+            },
+            "&:active": {
+              border: "none",
+            },
+          }}
+        >
+          {" "}
+          View All Accounts{" "}
+        </Button>
       </div>
 
       {isEmployeePressed && <AllEmployees />}
       {isCustomerPressed && <Customers />}
+      {isAllAccountsPressed && <UserAccounts />}
     </div>
   );
 };

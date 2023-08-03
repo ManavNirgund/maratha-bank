@@ -6,12 +6,13 @@ import { useFormik } from "formik";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   TextField,
   Typography,
 } from "@mui/material";
-import { PersonAdd } from "@mui/icons-material";
+import { Payment, PersonAdd } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dashboardImage from "../../Assets/Images/dashboard.svg";
 import axios from "axios";
@@ -27,12 +28,15 @@ const Transaction = () => {
 
   const [isAddBalancePressed, setIsAddBalancePressed] = useState(true);
   const [isWithBalancePressed, setIsWithBalancePressed] = useState(false);
-  const [isStatmentPressed, setIsStatementPressed] = useState(false);
+  const [isTransferPressed, setIsTransferPressed] = useState(false);
 
   const [account, setAccount] = useState(null);
   const [pdfData, setPdfData] = useState(null);
 
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [isAddBalanceDisabled, setAddBalanceDisabled] = useState(false);
+  const [isWithBalanceDisabled, setWithBalanceDisabled] = useState(false);
+  const [isTransferBalanceDisabled, setTranferBalanceDisabled] =
+    useState(false);
 
   const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
@@ -55,55 +59,10 @@ const Transaction = () => {
       });
   }, []);
 
-  const getStatement = () => {
-    axios
-      .get(`http://localhost:8082/customer/transaction/export`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        responseType: "arraybuffer", // Set the response type to arraybuffer
-      })
-      .then((res) => {
-        console.log(res);
-        const base64Data = btoa(
-          new Uint8Array(res.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
-        );
-        setPdfData(base64Data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const addBalanceValues = {
     username: "",
     amount: "",
   };
-
-  const tableStyle = {
-    minWidth: "650px",
-    borderCollapse: "collapse",
-  };
-
-  const cellStyle = {
-    border: "1px solid black",
-    padding: "8px",
-  };
-
-  const headerCellStyle = {
-    ...cellStyle,
-    backgroundColor: "lightgray",
-  };
-
-  const validationSchemaCreateTrans = Yup.object({
-    email: Yup.string()
-      .required("Please enter your email id")
-      .email("An email does not look like this"),
-    accountNumber: Yup.string().required("Please enter an account number"),
-  });
 
   const validationSchemaAddBalance = Yup.object({
     username: Yup.string()
@@ -118,7 +77,7 @@ const Transaction = () => {
     initialValues: addBalanceValues,
     onSubmit: (values) => {
       const token = localStorage.getItem("token");
-      setIsSubmitDisabled(true);
+      setAddBalanceDisabled(true);
       axios
         .put("http://localhost:8082/customer/transaction/deposit", values, {
           headers: {
@@ -128,12 +87,12 @@ const Transaction = () => {
           },
         })
         .then((res) => {
-          setIsSubmitDisabled(false);
+          setAddBalanceDisabled(false);
           console.log(res.data);
           toast.success(res.data);
         })
         .catch((error) => {
-          setIsSubmitDisabled(false);
+          setAddBalanceDisabled(false);
           console.log(error);
           alert(`${error.response.data}`);
         });
@@ -144,8 +103,8 @@ const Transaction = () => {
   const formikWithdrawBalance = useFormik({
     initialValues: addBalanceValues,
     onSubmit: (values) => {
+      setWithBalanceDisabled(true);
       const token = localStorage.getItem("token");
-      setIsSubmitDisabled(true);
       axios
         .put("http://localhost:8082/customer/transaction/withdraw", values, {
           headers: {
@@ -155,17 +114,52 @@ const Transaction = () => {
           },
         })
         .then((res) => {
-          setIsSubmitDisabled(false);
+          setWithBalanceDisabled(false);
           toast.success(res.data);
           formikWithdrawBalance.resetForm();
         })
         .catch((error) => {
-          setIsSubmitDisabled(false);
+          setWithBalanceDisabled(false);
           console.log(error);
           alert(`${error.name}: ${error.message}`);
         });
     },
     validationSchema: validationSchemaAddBalance,
+  });
+
+  const formikTransfer = useFormik({
+    initialValues: {
+      accno: "",
+      ifsccode: "",
+      username: "",
+      amount: "",
+    },
+    onSubmit: (values) => {
+      setTranferBalanceDisabled(true);
+      console.log(values);
+      axios
+        .put(
+          `http://localhost:8082/customer/transaction/bank-transfer`,
+          values,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((res) => {
+          setTranferBalanceDisabled(false);
+          console.log(res.data);
+          toast.success(res.data);
+          formikTransfer.resetForm();
+        })
+        .catch((error) => {
+          setTranferBalanceDisabled(false);
+          console.log(error);
+          toast.error(error);
+        });
+    },
   });
 
   return (
@@ -176,6 +170,7 @@ const Transaction = () => {
           onClick={() => {
             setIsAddBalancePressed(true);
             setIsWithBalancePressed(false);
+            setIsTransferPressed(false);
           }}
           sx={{
             marginTop: "0.5rem",
@@ -198,6 +193,7 @@ const Transaction = () => {
           onClick={() => {
             setIsWithBalancePressed(true);
             setIsAddBalancePressed(false);
+            setIsTransferPressed(false);
           }}
           sx={{
             marginTop: "0.5rem",
@@ -219,8 +215,12 @@ const Transaction = () => {
           Withdraw
         </Button>
         <Button
-          variant={isWithBalancePressed === true ? "contained" : "outlined"}
-          onClick={getStatement}
+          variant={isTransferPressed === true ? "contained" : "outlined"}
+          onClick={() => {
+            setIsAddBalancePressed(false);
+            setIsWithBalancePressed(false);
+            setIsTransferPressed(true);
+          }}
           sx={{
             marginTop: "0.5rem",
             marginBottom: "0.5rem",
@@ -229,16 +229,13 @@ const Transaction = () => {
             border: "2px solid #870040",
             fontSize: "1rem",
             backgroundColor:
-              isWithBalancePressed === true ? "antiquewhite" : "inherit",
+              isTransferPressed === true ? "antiquewhite" : "inherit",
             "&:hover": {
               border: "none",
             },
-            "&:active": {
-              // transform: `translateY(${theme.spacing(-1)})`,
-            },
           }}
         >
-          Statement
+          Bank Transfer
         </Button>
       </div>
       <Grid container display="flex" justifyContent="center" spacing={2}>
@@ -316,6 +313,7 @@ const Transaction = () => {
                       variant="outlined"
                       color="primary"
                       type="submit"
+                      disabled={isAddBalanceDisabled}
                       startIcon={<PersonAdd />}
                     >
                       {" "}
@@ -372,7 +370,7 @@ const Transaction = () => {
                       variant="filled"
                       name="username"
                       id="username"
-                      label="Amount"
+                      label="Username"
                       value={formikWithdrawBalance.values.username}
                       onChange={formikWithdrawBalance.handleChange}
                       onBlur={formikWithdrawBalance.handleBlur}
@@ -420,10 +418,9 @@ const Transaction = () => {
                       variant="outlined"
                       color="primary"
                       type="submit"
-                      startIcon={<PersonAdd />}
+                      startIcon={<Payment />}
                     >
-                      {" "}
-                      Create{" "}
+                      {isWithBalanceDisabled ? <CircularProgress /> : "Create"}
                     </Button>
                   </Grid>
                   <Grid item xs={12} sm={4}>
@@ -443,6 +440,117 @@ const Transaction = () => {
                       startIcon={<DeleteIcon />}
                       onClick={() => {
                         setIsWithBalancePressed(false);
+                      }}
+                    >
+                      {" "}
+                      Cancel{" "}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Container>
+          )}
+          {isTransferPressed && (
+            <Container
+              maxWidth="sm"
+              sx={{
+                backgroundColor: "rgb(173, 2, 83)",
+                borderRadius: "10px",
+                boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <Box
+                component="form"
+                noValidate
+                className="mt-3 mb-3 p-5 pt-5"
+                onSubmit={formikTransfer.handleSubmit}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      name="accno"
+                      id="accno"
+                      label="Account Number"
+                      value={formikTransfer.values.accno}
+                      onChange={formikTransfer.handleChange}
+                      onBlur={formikTransfer.handleBlur}
+                      InputProps={{
+                        style: { color: "antiquewhite" },
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      name="amount"
+                      label="Amount"
+                      value={formikTransfer.values.amount}
+                      onChange={formikTransfer.handleChange}
+                      onBlur={formikTransfer.handleBlur}
+                      InputProps={{
+                        style: { color: "antiquewhite" },
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      name="ifsccode"
+                      label="IFSC Code"
+                      value={formikTransfer.values.ifsccode}
+                      onChange={formikTransfer.handleChange}
+                      onBlur={formikTransfer.handleBlur}
+                      InputProps={{
+                        style: { color: "antiquewhite" },
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      name="username"
+                      label="Username"
+                      value={formikTransfer.values.username}
+                      onChange={formikTransfer.handleChange}
+                      onBlur={formikTransfer.handleBlur}
+                      InputProps={{
+                        style: { color: "antiquewhite" },
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      type="submit"
+                      disabled={isTransferBalanceDisabled}
+                      startIcon={<Payment />}
+                    >
+                      {isTransferBalanceDisabled ? <CircularProgress /> : "Pay"}
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <Button
+                      variant="outlined"
+                      color="warning"
+                      onClick={() => isTransferBalanceDisabled.resetForm()}
+                    >
+                      {" "}
+                      Clear{" "}
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => {
+                        setIsTransferPressed(false);
                       }}
                     >
                       {" "}

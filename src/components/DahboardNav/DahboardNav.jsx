@@ -47,7 +47,6 @@ const DashboardNav = () => {
       )
       .then((res) => {
         setTransaction(res.data);
-        console.log(res.data);
       })
 
       .catch((error) => {
@@ -86,8 +85,7 @@ const DashboardNav = () => {
                   .toLocaleString()
                   .split(", ");
                 return (
-                  <TableRow key={item.id}>
-                    {console.log(item.id)}
+                  <TableRow key={item.transactionid}>
                     <TableCell sx={cellStyle}>{item.transactionid}</TableCell>
                     <TableCell sx={cellStyle}>{date}</TableCell>
                     <TableCell sx={cellStyle}>{time}</TableCell>
