@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import AllEmployees from "../AllEmployees";
-import Customers from "../Customers";
+import AllEmployees from "./AllEmployees";
+import Customers from "../Employee/Customers";
 
 const AdminDashboard = () => {
   const [isEmployeePressed, setIsEmployeePressed] = useState(true);

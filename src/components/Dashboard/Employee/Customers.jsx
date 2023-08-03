@@ -35,7 +35,7 @@ const Customers = () => {
   }, []);
 
   
-  const deleteCustoemr = (id) => {
+  const deleteCustomer = (id) => {
     if (!window.confirm('Are you sure to want to Delete this customer?')) {
       toast.success("Customer not deleted")
       return null;
@@ -80,7 +80,7 @@ const Customers = () => {
                         variant="contained"
                         color="error"
                         onClick={() => {
-                          // deleteEmployee(customer.id)
+                          deleteCustomer(customer.id)
                           console.log("delete pressed");
                         }}
                       >
