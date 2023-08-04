@@ -33,12 +33,12 @@ const About = () => {
           </Typography>
 
           <Typography variant="body2" color="antiquewhite">
-            {appName.title} is a leading digital bank that prioritizes convenience
-            and security. With a strong emphasis on digital technology, we offer
-            online and mobile banking services, ensuring a seamless and
-            efficient banking experience for our customers. Our goal is to
-            empower individuals and businesses with innovative digital solutions
-            that meet their financial needs effectively.
+            {appName.title} is a leading digital bank that prioritizes
+            convenience and security. With a strong emphasis on digital
+            technology, we offer online and mobile banking services, ensuring a
+            seamless and efficient banking experience for our customers. Our
+            goal is to empower individuals and businesses with innovative
+            digital solutions that meet their financial needs effectively.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -78,6 +78,7 @@ const About = () => {
           {socials.map((item) => {
             return (
               <Link
+                key={item.id}
                 to={item.url}
                 target="_blank"
                 style={{

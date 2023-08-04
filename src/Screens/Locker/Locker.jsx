@@ -24,11 +24,12 @@ import dashboardImage from "../../Assets/Images/dashboard.svg";
 import "./Locker.css";
 import { toast } from "react-toastify";
 import Lockers from "../../components/Dashboard/Lockers";
+import PayLocker from "./PayLocker";
 
 const Locker = () => {
   const [selectedButton, setSelectedButton] = useState(false);
   const [isReserveLockerPressed, setIsReserveLockerPressed] = useState(false);
-  const [isPayPressed, setIsPressed] = useState(false);
+  const [isPayPressed, setIsPayPressed] = useState(false);
   const [isSigninDisabled, setIsSigninDisabled] = useState(false);
   const [name, setName] = useState();
 
@@ -87,14 +88,14 @@ const Locker = () => {
     <div className={isReserveLockerPressed ? "lockerimage" : ""}>
       <div>
         <Typography color="black" variant="h5" className="mt-5 mb-3">
-          Welcome {name}
+          {name}
         </Typography>
       </div>
       <Button
         variant={isReserveLockerPressed === true ? "contained" : "outlined"}
         onClick={() => {
           setIsReserveLockerPressed(true);
-          setIsPressed(false);
+          setIsPayPressed(false);
         }}
         sx={{
           border: "2px solid #870040",
@@ -113,10 +114,10 @@ const Locker = () => {
         Reserve a locker
       </Button>
       <Button
-        variant={isReserveLockerPressed === true ? "contained" : "outlined"}
+        variant={isPayPressed === true ? "contained" : "outlined"}
         onClick={() => {
           setIsReserveLockerPressed(false);
-          setIsPressed(true);
+          setIsPayPressed(true);
         }}
         sx={{
           border: "2px solid #870040",
@@ -125,8 +126,7 @@ const Locker = () => {
           marginRight: "8px",
           color: "black",
           fontSize: "1rem",
-          backgroundColor:
-            isReserveLockerPressed === true ? "antiquewhite" : "inherit",
+          backgroundColor: isPayPressed === true ? "antiquewhite" : "inherit",
           "&:hover": {
             border: "none",
           },
@@ -134,7 +134,6 @@ const Locker = () => {
       >
         Pay
       </Button>
-      {/* Form fields here */}
       {isReserveLockerPressed && (
         <Container
           maxWidth="sm"
@@ -268,7 +267,7 @@ const Locker = () => {
           </Box>
         </Container>
       )}
-
+      {isPayPressed && <PayLocker />}
       <Lockers />
 
       {isReserveLockerPressed == false && (

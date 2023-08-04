@@ -47,19 +47,21 @@ const Lockers = () => {
               <TableCell>Type</TableCell>
               <TableCell>Location</TableCell>
               <TableCell>Size</TableCell>
+              <TableCell>Price</TableCell>
               <TableCell>Paid?</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {lockers.map((locker) => (
+            {lockers.map((item) => (
               <TableRow>
-                <TableCell>#{locker.lockerid}</TableCell>
-                <TableCell>{locker.lockertype}</TableCell>
-                <TableCell>{locker.lockerlocation}</TableCell>
-                <TableCell>{locker.lockersize}</TableCell>
-                <TableCell>{locker.amountPaid ? "Yes" : "No"}</TableCell>
-                <TableCell>{locker.lockerstatus}</TableCell>
+                <TableCell>#{item.lockerid}</TableCell>
+                <TableCell>{item.lockertype}</TableCell>
+                <TableCell>{item.lockerlocation}</TableCell>
+                <TableCell>{item.lockersize}</TableCell>
+                <TableCell>{item.lockerprice}</TableCell>
+                <TableCell>{item.amountPaid ? "Yes" : "No"}</TableCell>
+                <TableCell>{item.lockerstatus}</TableCell>
               </TableRow>
             ))}
           </TableBody>
