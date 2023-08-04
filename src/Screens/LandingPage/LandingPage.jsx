@@ -20,10 +20,10 @@ function LandingPage() {
               Welcome to {appName.title}
             </Typography>
             <p className="lead">
-              Welcome to Axis Bank, your trusted financial partner for all your
-              banking needs. As one of India's leading private sector banks, we
-              are committed to providing you with exceptional services,
-              innovative solutions, and a seamless banking experience.
+              Welcome to {appName.title}, your trusted financial partner for all
+              your banking needs. As one of India's leading private sector
+              banks, we are committed to providing you with exceptional
+              services, innovative solutions, and a seamless banking experience.
             </p>
           </Col>
         </Row>
@@ -35,29 +35,36 @@ function LandingPage() {
             // alignItems: "center",
           }}
         >
-          {/* <img src={bank} width="500vw" height="auto" /> */}
+          <img
+            src={bank}
+            width="500vw"
+            height="auto"
+            style={{ alignSelf: "center" }}
+          />
           <Typography variant="h4" color="black" sx={{ textAlign: "left" }}>
             {" "}
             Products{" "}
           </Typography>
-          <div className="product-container">
-            {products.map((item) => {
-              return (
-                <Product
-                  key={item.id}
-                  component={Link}
-                  to={item.to}
-                  className="card"
-                >
-                  <CardMedia>{item.icon}</CardMedia>
-                  <CardContent>
-                    <Typography variant="h5" color="black">
-                      {item.name}
-                    </Typography>
-                  </CardContent>
-                </Product>
-              );
-            })}
+          <div className="product-container-wrapper">
+            <div className="product-container">
+              {products.map((item) => {
+                return (
+                  <Product
+                    key={item.id}
+                    component={Link}
+                    to={item.to}
+                    className="card"
+                  >
+                    <CardMedia>{item.icon}</CardMedia>
+                    <CardContent>
+                      <Typography variant="h5" color="black">
+                        {item.name}
+                      </Typography>
+                    </CardContent>
+                  </Product>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Container>

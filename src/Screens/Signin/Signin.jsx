@@ -12,6 +12,7 @@ const Signin = () => {
 
   return (
     <Grid container spacing={0}>
+      {/* On small screens, the order remains unchanged */}
       <Grid item xs={12} md={6}>
         <div
           style={{
@@ -102,19 +103,20 @@ const Signin = () => {
             Customer login{" "}
           </Button>
         </div>
+        {isAdminLoginPressed && <AdminLogin />}
+        {isEmployeeLoginPressed && <EmployeeLogin />}
+        {isCustomerLoginPressed && <CustomerLogin />}
+      </Grid>
+
+      {/* On large screens, place the flat gif on the right */}
+      <Grid item xs={12} md={6}>
         <img
           src={flatGif}
           alt="login"
           width="500rem"
           height="500rem"
-          style={{ alignSelf: "flex-end", marginLeft: "-5rem" }}
+          style={{ alignSelf: "flex-end" }}
         />
-      </Grid>
-
-      <Grid item xs={12} md={6}>
-        {isAdminLoginPressed && <AdminLogin />}
-        {isEmployeeLoginPressed && <EmployeeLogin />}
-        {isCustomerLoginPressed && <CustomerLogin />}
       </Grid>
     </Grid>
   );

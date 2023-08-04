@@ -9,13 +9,14 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useAuth } from "../../components/Service/utilities/auth";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { PersonAdd } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function AdminLogin() {
   const nav = useNavigate();
@@ -55,11 +56,6 @@ function AdminLogin() {
         .post("http://localhost:8081/admin/authenticate", values, {
           headers: {
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Methods":
-            //   "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            // "Access-Control-Allow-Headers":
-            //   "Origin, X-Requested-With, Content-Type, Accept",
           },
         })
         .then((res) => {
@@ -71,11 +67,10 @@ function AdminLogin() {
           localStorage.setItem("email", values.username);
           console.log(values.username, values.password, token);
           auth.login(values.username, values.password, token);
-          if (values.username == "admin") {
-            localStorage.setItem("asAdmin", true);
-          } else {
-            localStorage.setItem("asAdmin", false);
-          }
+          if (values.username != "admin") {
+            toast.error("Apologies! This page is only for admins. PLease enter correct credentials if you are an admin.")
+            return <Navigate to="/signin"/>
+          } 
           formik.resetForm();
           nav("/admin", { replace: true });
         })

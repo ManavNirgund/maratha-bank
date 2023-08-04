@@ -173,7 +173,7 @@ const Loan = () => {
           },
         }}
       >
-        Apply for Loan
+        Pay EMI
       </Button>
       {isCreateLoanPressed && (
         <Container

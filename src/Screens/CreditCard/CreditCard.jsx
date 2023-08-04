@@ -10,7 +10,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { PersonAdd } from "@mui/icons-material";
+import { Payment, PersonAdd } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dashboardImage from "../../Assets/Images/dashboard.svg";
 // import { Table } from "react-bootstrap";
@@ -47,6 +47,8 @@ const CreditCard = () => {
     useState(false);
   const [isClosePressed, setIsClosedPressed] = useState();
 
+  const [isPayDisabled, setIsPayDisabled] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const applyCreditValues = {
@@ -65,27 +67,6 @@ const CreditCard = () => {
     cardNumber: Yup.string().required("Please enter the credit card number"),
     amount: Yup.number().required("Please enter the payment amount"),
   });
-
-  const makePayment = (values) => {
-    setIsSubmitDisabled(true);
-    axios
-      .post("http://localhost:8085/customer/creditcard/make-payment", values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        toast.success(res.data);
-        setIsSubmitDisabled(false);
-        formikMakePaymentCredit.resetForm();
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsSubmitDisabled(false);
-        formikMakePaymentCredit.resetForm();
-      });
-  };
 
   const formikApplyCredit = useFormik({
     initialValues: applyCreditValues,
@@ -118,8 +99,30 @@ const CreditCard = () => {
 
   const formikMakePaymentCredit = useFormik({
     initialValues: payValues,
-    onSubmit: (values) => makePayment(values),
-    validationSchema: validationSchemaPay,
+    onSubmit: (values) => {
+      setIsPayDisabled(true);
+      axios
+        .post(
+          "http://localhost:8085/customer/creditcard/make-payment",
+          values,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          setIsPayDisabled(false);
+          toast.success(res.data);
+          formikMakePaymentCredit.resetForm();
+        })
+        .catch((error) => {
+          setIsPayDisabled(false);
+          console.log(error);
+          formikMakePaymentCredit.resetForm();
+        });
+    },
   });
 
   return (
@@ -358,16 +361,18 @@ const CreditCard = () => {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  startIcon={<PersonAdd />}
+                  disabled={isPayDisabled}
+                  startIcon={<Payment />}
                 >
                   {" "}
-                  Create{" "}
+                  Pay{" "}
                 </Button>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
                   variant="contained"
                   color="warning"
+                  type="reset"
                   onClick={() => formikMakePaymentCredit.resetForm()}
                 >
                   {" "}
