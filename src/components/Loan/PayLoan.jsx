@@ -10,6 +10,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+// import ".PayLoan.css"
 
 const PayLoan = () => {
   const [isPayloanDisabled, setIsPayLoanDisabled] = useState(false);
@@ -31,7 +32,6 @@ const PayLoan = () => {
         })
         .then((res) => {
           setIsPayLoanDisabled(false);
-          console.log(res.data);
           toast.success(res.data);
           formik.resetForm();
         })

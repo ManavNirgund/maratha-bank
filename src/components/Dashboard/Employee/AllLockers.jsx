@@ -28,10 +28,9 @@ const AllLocker = () => {
         setLockers(res.data);
       })
       .catch((error) => {
-        toast.error(error);
-        console.log(error);
+        toast.error(error.response.data.message);
       });
-  }, []);
+  });
 
   const activate = (id) => {
     setISActivateDisabled(true);
@@ -53,7 +52,7 @@ const AllLocker = () => {
       .catch((error) => {
         setISActivateDisabled(false);
         console.log(error);
-        toast.error(error);
+        toast.error(error.response.data.message);
       });
   };
 
@@ -71,13 +70,12 @@ const AllLocker = () => {
       )
       .then((res) => {
         setIsCloseDisabled(false);
-        console.log(res.data);
         toast.success(res.data);
       })
       .catch((error) => {
         setIsCloseDisabled(false);
         console.log(error);
-        toast.error(error);
+        toast.error(error.response.data.message);
       });
   };
 

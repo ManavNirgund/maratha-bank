@@ -28,7 +28,7 @@ const CreditCards = () => {
         console.log(error);
         toast.error(error);
       });
-  }, []);
+  });
 
   return (
     <div>

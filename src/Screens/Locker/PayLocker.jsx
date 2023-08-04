@@ -17,10 +17,15 @@ const PayLocker = () => {
   const [isPayDisabled, setIsPayDisabled] = useState(false);
 
   const formik = useFormik({
-    initialValues: { email: "", lockerid: "", lockertype: "", lockeramount: "" },
+    initialValues: {
+      email: "",
+      lockerid: "",
+      lockertype: "",
+      lockeramount: "",
+    },
     onSubmit: (values) => {
       setIsPayDisabled(true);
-      console.log(values)
+      console.log(values);
       axios
         .put(`http://localhost:8084/customer/locker/locker-payment`, values, {
           headers: {
@@ -121,9 +126,10 @@ const PayLocker = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Button
-              variant="outlined"
+              fullWidth
+              variant="contained"
               color="primary"
               type="submit"
               disabled={isPayDisabled}
@@ -136,17 +142,17 @@ const PayLocker = () => {
               )}
             </Button>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Button
-              variant="outlined"
-              color="warning"
+              fullWidth
+              variant="contained"
+              color="error"
               type="reset"
               startIcon={<ClearIcon />}
             >
               Clear
             </Button>
           </Grid>
-          <Grid item xs={12} sm={4}></Grid>
         </Grid>
       </Box>
     </Container>

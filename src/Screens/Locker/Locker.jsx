@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
-import { lockerSizes } from "../../Assets/data/enums";
+import { lockerSizes, lockerTypes } from "../../Assets/data/enums";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ClearIcon from "@mui/icons-material/Clear";
 import axios from "axios";
@@ -28,7 +28,7 @@ import PayLocker from "./PayLocker";
 
 const Locker = () => {
   const [selectedButton, setSelectedButton] = useState(false);
-  const [isReserveLockerPressed, setIsReserveLockerPressed] = useState(false);
+  const [isReserveLockerPressed, setIsReserveLockerPressed] = useState(true);
   const [isPayPressed, setIsPayPressed] = useState(false);
   const [isSigninDisabled, setIsSigninDisabled] = useState(false);
   const [name, setName] = useState();
@@ -45,7 +45,7 @@ const Locker = () => {
 
   const inititalValues = {
     email: "",
-    lockertype: "",
+    lockertype: lockerTypes.Personal_Locker,
     lockersize: lockerSizes.SMALL,
     lockerlocation: "",
   };
@@ -173,19 +173,27 @@ const Locker = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  variant="filled"
-                  name="lockertype"
-                  label="Type"
-                  value={formik.values.lockertype}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  InputProps={{
-                    style: { color: "antiquewhite" },
-                  }}
-                />
+                <FormControl fullWidth variant="filled">
+                  <InputLabel id="lockertypes-label" sx={{ color: "white" }}>
+                    Locker Type
+                  </InputLabel>
+                  <Select
+                    labelId="lockersize-label"
+                    id="lockertype"
+                    name="lockertype"
+                    value={formik.values.lockertype}
+                    onChange={formik.handleChange}
+                    inputProps={{
+                      style: { color: "white" },
+                    }}
+                  >
+                    {Object.values(lockerTypes).map((item) => (
+                      <MenuItem key={item} value={item}>
+                        {item}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth variant="filled">
@@ -227,7 +235,7 @@ const Locker = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   type="submit"
                   disabled={isSigninDisabled}
@@ -242,7 +250,7 @@ const Locker = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="warning"
                   startIcon={<ClearIcon />}
                 >
@@ -251,7 +259,7 @@ const Locker = () => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="error"
                   startIcon={<DeleteIcon />}
                   onClick={() => {

@@ -22,7 +22,6 @@ import { toast } from "react-toastify";
 import CreditCards from "../../components/Dashboard/CreditCards";
 import "./CreditCard.css";
 import PayCredit from "../../components/CreditCard/PayCredit";
-import CLoseCredit from "../../components/CreditCard/CLoseCredit";
 
 const tableStyle = {
   minWidth: "650px",
@@ -259,6 +258,7 @@ const CreditCard = () => {
                   variant="contained"
                   color="primary"
                   type="submit"
+                  disabled={isSubmitDisabled}
                   startIcon={<PersonAdd />}
                 >
                   {" "}

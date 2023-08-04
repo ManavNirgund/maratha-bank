@@ -26,7 +26,8 @@ const Loans = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  });
+
   return (
     <div>
       {loans ? (
@@ -37,8 +38,8 @@ const Loans = () => {
             backgroundColor: "#888",
             color: "#fff",
             borderRadius: "10px",
-            maxWidth: "90vw", // Set an appropriate maxWidth value
-            margin: "0 auto", // Center the table horizontally
+            maxWidth: "90vw",
+            margin: "0 auto",
           }}
         >
           <TableHead>

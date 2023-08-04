@@ -39,7 +39,7 @@ const headerCellStyle = {
 
 const GiftCard = () => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
-  const [isApplyGiftPressed, setIsApplyGiftPressed] = useState(false);
+  const [isApplyGiftPressed, setIsApplyGiftPressed] = useState(true);
 
   const token = localStorage.getItem("token");
 

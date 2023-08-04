@@ -48,13 +48,9 @@ const headerCellStyle = {
 };
 const Loan = () => {
   const [selectedButton, setSelectedButton] = useState(null);
-  const [isCreateLoanPressed, setIsCreateLoanPressed] = useState(false);
+  const [isCreateLoanPressed, setIsCreateLoanPressed] = useState(true);
   const [isSigninDisabled, setIsSigninDisabled] = useState(false);
   const [isPayLoanPressed, setPayLoanPressed] = useState(false);
-
-  const [userType, setUserType] = useState("");
-  const [userTypes, setUserTypes] = useState("");
-  const [firstName, setFirstName] = useState("");
 
   const initialValues = {
     username: "",
@@ -93,11 +89,6 @@ const Loan = () => {
     initialValues: initialValues,
     onSubmit: (values) => {
       setIsSigninDisabled(true);
-      const valuesWithId = {
-        ...values,
-        id: Math.floor(Math.random() * (999999 - 100000 + 1)) + 999999,
-      };
-      console.log("valuesWithId: ", valuesWithId);
       axios
         .post("http://localhost:8083/customer/loan/apply-loan", values, {
           headers: {
@@ -108,10 +99,7 @@ const Loan = () => {
         })
         .then((res) => {
           setIsSigninDisabled(false);
-          alert(
-            `Your application for a ${formik.values.loanamount} has been submitted successfully!`
-          );
-          console.log("response", res.data);
+          toast.success(res.data);
           formik.resetForm();
         })
         .catch((error) => {

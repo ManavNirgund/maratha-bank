@@ -28,7 +28,7 @@ const GiftCards = () => {
         console.log(error);
         toast.error(error);
       });
-  }, []);
+  });
 
   return (
     <div>

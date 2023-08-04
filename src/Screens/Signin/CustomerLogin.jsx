@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import { PersonAdd } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function CustomerLogin() {
   const nav = useNavigate();
@@ -42,10 +43,8 @@ function CustomerLogin() {
   };
 
   const validationSchema = Yup.object({
-    username: Yup.string()
-      .required("Please enter your email"),
-    password: Yup.string()
-      .required("Please enter your password")
+    username: Yup.string().required("Please enter your email"),
+    password: Yup.string().required("Please enter your password"),
   });
 
   const formik = useFormik({
@@ -54,15 +53,11 @@ function CustomerLogin() {
     onSubmit: (values) => {
       setIsSigninDisabled(true);
       axios
-        .post(
-          "http://localhost:8081/customer/authenticate",
-          values,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        .post("http://localhost:8081/customer/authenticate", values, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           setIsSigninDisabled(false);
           const token = res.data;
@@ -80,8 +75,9 @@ function CustomerLogin() {
           formik.resetForm();
           nav("/transaction", { replace: true });
         })
-        .catch((res) => {
-          alert(res.response.data.message);
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
           setIsSigninDisabled(false);
           formik.resetForm();
         });
@@ -125,7 +121,9 @@ function CustomerLogin() {
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.username && formik.errors.username ? true : false
+                  formik.touched.username && formik.errors.username
+                    ? true
+                    : false
                 }
                 helperText={formik.touched.username && formik.errors.username}
                 InputProps={{
