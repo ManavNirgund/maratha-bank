@@ -310,7 +310,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
                       type="submit"
                       disabled={isAddBalanceDisabled}
@@ -322,7 +322,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="warning"
                       onClick={() => formikAddBalance.resetForm()}
                     >
@@ -332,7 +332,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="error"
                       startIcon={<DeleteIcon />}
                       onClick={() => {
@@ -415,7 +415,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
                       type="submit"
                       startIcon={<Payment />}
@@ -425,7 +425,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="warning"
                       onClick={() => formikWithdrawBalance.resetForm()}
                     >
@@ -435,7 +435,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="error"
                       startIcon={<DeleteIcon />}
                       onClick={() => {
@@ -525,7 +525,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
                       type="submit"
                       disabled={isTransferBalanceDisabled}
@@ -536,7 +536,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="warning"
                       onClick={() => isTransferBalanceDisabled.resetForm()}
                     >
@@ -546,7 +546,7 @@ const Transaction = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="error"
                       startIcon={<DeleteIcon />}
                       onClick={() => {

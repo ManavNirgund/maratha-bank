@@ -217,7 +217,7 @@ const CreditCard = () => {
           <Box
             component="form"
             noValidate
-            className="mt-5 p-5 pt-5"
+            className="p-5 pt-5"
             onSubmit={formikApplyCredit.handleSubmit}
           >
             <Grid container spacing={2} direction="column">
@@ -282,7 +282,7 @@ const CreditCard = () => {
           <Box
             component="form"
             noValidate
-            className="mt-5 p-5 pt-5"
+            className="p-5 pt-5"
             onSubmit={formikMakePaymentCredit.handleSubmit}
           >
             <Grid container spacing={2}>

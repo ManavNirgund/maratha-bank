@@ -65,7 +65,7 @@ const PayCredit = () => {
       <Box
         component="form"
         noValidate
-        className="mt-5 p-5 pt-5"
+        className="p-5 pt-5"
         onSubmit={formikPayCredit.handleSubmit}
       >
         <Grid container spacing={2}>

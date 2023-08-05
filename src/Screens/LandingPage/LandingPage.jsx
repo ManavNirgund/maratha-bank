@@ -32,15 +32,9 @@ function LandingPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            // alignItems: "center",
           }}
         >
-          <img
-            src={bank}
-            width="500vw"
-            height="auto"
-            style={{ alignSelf: "center" }}
-          />
+          <img src={bank} style={{ alignSelf: "center" }} />
           <Typography variant="h4" color="black" sx={{ textAlign: "left" }}>
             {" "}
             Products{" "}

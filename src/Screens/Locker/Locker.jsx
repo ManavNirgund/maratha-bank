@@ -85,7 +85,9 @@ const Locker = () => {
   });
 
   return (
-    <div className={isReserveLockerPressed ? "lockerimage" : ""}>
+    <div
+      className={isReserveLockerPressed || isPayPressed ? "lockerimage" : ""}
+    >
       <div>
         <Typography color="black" variant="h5" className="mt-5 mb-3">
           {name}
