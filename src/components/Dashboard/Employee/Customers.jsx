@@ -32,21 +32,28 @@ const Customers = () => {
         alert(error);
         console.log(error);
       });
-  }, []);
+  });
 
   const deleteCustomer = (accNumber) => {
     if (!window.confirm("Are you sure to want to Delete this customer?")) {
       toast.success("Customer not deleted");
       return null;
     }
-    axios.delete(`http://localhost:8081/employee/delete-customer`, {
-      data: {
-        accno: accNumber,
-      },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    axios
+      .delete(`http://localhost:8081/employee/delete-customer`, {
+        data: {
+          accno: accNumber,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

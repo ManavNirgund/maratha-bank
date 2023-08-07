@@ -40,7 +40,9 @@ const Locker = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => setName(res.data));
+      .then((response) => {
+        setName(response.data);
+      });
   }, []);
 
   const inititalValues = {

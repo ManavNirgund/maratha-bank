@@ -58,14 +58,12 @@ function CustomerLogin() {
             "Content-Type": "application/json",
           },
         })
-        .then((res) => {
+        .then((response) => {
           setIsSigninDisabled(false);
-          const token = res.data;
+          const token = response.data;
 
-          console.log(token);
-          localStorage.setItem("token", token);
-          localStorage.setItem("email", values.username);
-          console.log(values.username, values.password, token);
+          // localStorage.setItem("email", values.username);
+          console.log(response.data);
           auth.login(values.username, values.password, token);
           if (values.username == "admin") {
             localStorage.setItem("asAdmin", true);

@@ -115,7 +115,7 @@ const Transaction = () => {
         })
         .then((res) => {
           setWithBalanceDisabled(false);
-          toast.success(res.data);
+          toast.error(res.data);
           formikWithdrawBalance.resetForm();
         })
         .catch((error) => {
