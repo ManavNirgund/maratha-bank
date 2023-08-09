@@ -8,6 +8,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import CloudIcon from "@mui/icons-material/Cloud";
 
 export const appName = {
   title: "Maratha Bank",
@@ -92,6 +93,17 @@ export const products = [
     icon: <LockPersonIcon style={{ marginTop: "10px", fontSize: "38px" }} />,
     to: "/locker",
   },
+  {
+    id: 6,
+    name: "Weather",
+    icon: <CloudIcon style={{ marginTop: "10px", fontSize: "38px" }} />,
+    to: "/weather",
+  },
+];
+
+export const news = [
+  { id: 1, name: "Agriculture News", to: "/agriculture-news" },
+  { id: 2, name: "Local News", to: "/local-news" },
 ];
 
 export const socials = [
@@ -108,4 +120,9 @@ export const socials = [
     icon: <InstagramIcon />,
     url: "https://www.instagram.com/axis_bank/",
   },
+];
+
+export const CommunityDropdown = [
+  { id: 1, name: "Create", to: "/publish" },
+  { id: 2, name: "Feed", to: "/feed" },
 ];

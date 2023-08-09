@@ -12,9 +12,13 @@ import {
   MDBNavbarToggler,
   MDBIcon,
   MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
 } from "mdb-react-ui-kit";
 import marathaBank from "../../Assets/Images/maratha-bank.png";
-import { appName } from "../../Assets/data/enums";
+import { CommunityDropdown, appName, news } from "../../Assets/data/enums";
 
 // import { Link } from "react-scroll";
 
@@ -22,17 +26,16 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Service/utilities/auth";
-import { products } from "../../Assets/data/enums";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import ScrollToAbout from "../ScrollToAbout/ScrollToAbout";
 
 export default function Header() {
   const [showBasic, setShowBasic] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItemCom, setSelectedItemCom] = useState("");
 
   const nav = useNavigate();
   const auth = useAuth();
-  const jwt = localStorage.getItem("token");
 
   const handleLogout = () => {
     auth.logout();
@@ -64,17 +67,85 @@ export default function Header() {
             </MDBNavbarItem>
 
             <MDBNavbarItem>
+              <MDBDropdown>
+                <MDBDropdownToggle
+                  tag="a"
+                  className="nav-link"
+                  role="button"
+                  style={{ color: "white" }}
+                >
+                  {selectedItemCom ? selectedItemCom.name : "Community"}
+                </MDBDropdownToggle>
+                <MDBDropdownMenu
+                  style={{
+                    borderRadius: "5px",
+                  }}
+                  className={showBasic ? "center-dropdown" : ""}
+                >
+                  {CommunityDropdown.map((item) => {
+                    return (
+                      <MDBDropdownItem
+                        key={item.id}
+                        style={{
+                          marginTop: "5px",
+                          marginLeft: "5px",
+                          marginRight: "5px",
+                          borderBottom: "1px solid gray",
+                        }}
+                        onClick={() => setSelectedItemCom(item)}
+                      >
+                        <Link
+                          to={item.to}
+                          style={{ color: "black" }}
+                          onClick={() => setShowBasic(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      </MDBDropdownItem>
+                    );
+                  })}
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavbarItem>
+
+            <MDBNavbarItem>
+              <MDBDropdown>
+                <MDBDropdownToggle
+                  tag="a"
+                  className="nav-link"
+                  role="button"
+                  style={{ color: "white" }}
+                >
+                  {selectedItem ? selectedItem.name : "News"}
+                </MDBDropdownToggle>
+                <MDBDropdownMenu style={{ borderRadius: "5px" }}>
+                  {news.map((item) => {
+                    return (
+                      <MDBDropdownItem
+                        key={item.id}
+                        style={{
+                          marginTop: "5px",
+                          marginLeft: "5px",
+                          marginRight: "5px",
+                          borderBottom: "1px solid gray",
+                        }}
+                        onClick={() => setSelectedItem(item)}
+                      >
+                        <Link to={item.to} style={{ color: "black" }}>
+                          {item.name}
+                        </Link>
+                      </MDBDropdownItem>
+                    );
+                  })}
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavbarItem>
+
+            <MDBNavbarItem>
               <ScrollToAbout />
             </MDBNavbarItem>
           </MDBNavbarNav>
-          <MDBNavbarNav className="mx-auto">
-            {/* <MDBNavbarItem>
-              <MDBInputGroup>
-                <MDBInput type="text" />
-                <MDBBtn>Search</MDBBtn>
-              </MDBInputGroup>
-            </MDBNavbarItem> */}
-          </MDBNavbarNav>
+          <MDBNavbarNav className="mx-auto"></MDBNavbarNav>
           <MDBNavbarNav>
             <MDBNavbarItem>
               <MDBNavbarNav>

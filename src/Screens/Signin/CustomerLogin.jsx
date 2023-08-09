@@ -61,8 +61,8 @@ function CustomerLogin() {
         .then((response) => {
           setIsSigninDisabled(false);
           const token = response.data;
-
-          // localStorage.setItem("email", values.username);
+          localStorage.setItem("token", token);
+          localStorage.setItem("email", values.username);
           console.log(response.data);
           auth.login(values.username, values.password, token);
           if (values.username == "admin") {
@@ -113,7 +113,7 @@ function CustomerLogin() {
               <TextField
                 fullWidth
                 required
-                label="Email"
+                label="Username"
                 type="email"
                 name="username"
                 value={formik.values.username}

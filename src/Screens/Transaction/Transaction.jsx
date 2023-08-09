@@ -39,7 +39,6 @@ const Transaction = () => {
     useState(false);
 
   const token = localStorage.getItem("token");
-  const email = localStorage.getItem("email");
 
   useEffect(() => {
     axios
@@ -54,7 +53,7 @@ const Transaction = () => {
         setAccount(`${res.data}`);
       })
       .catch((error) => {
-        alert(error);
+        toast.error(error);
         console.log(error);
       });
   }, []);

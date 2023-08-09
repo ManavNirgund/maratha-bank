@@ -9,6 +9,12 @@ import EmployeeScreen from "./Screens/Employee/EmployeeScreen";
 import AdminDashboard from "./components/Dashboard/admin/AdminDashboard";
 import GiftCard from "./Screens/GiftCard/GiftCard";
 import Locker from "./Screens/Locker/Locker";
+import CreditCard from "./Screens/CreditCard/CreditCard";
+import AgriNews from "./Screens/News/AgriNews";
+import IndianNews from "./Screens/News/IndianNews";
+import Forecast from "./Screens/Weather/Forecast/Forecast";
+import ContentWriter from "./Screens/Content/ContentWriter";
+import Feed from "./Screens/Content/Feed";
 
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/Service/utilities/auth";
@@ -18,7 +24,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Loan from "./Screens/Loan/Loan";
-import CreditCard from "./Screens/CreditCard/CreditCard";
 
 function App() {
   return (
@@ -93,7 +98,47 @@ function App() {
                 <Locker />
               </RequireAuth>
             }
-          ></Route>
+          />
+          <Route
+            path="/agriculture-news"
+            element={
+              <RequireAuth>
+                <AgriNews />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/local-news"
+            element={
+              <RequireAuth>
+                <IndianNews />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/weather"
+            element={
+              <RequireAuth>
+                <Forecast />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/publish"
+            element={
+              <RequireAuth>
+                <ContentWriter />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/feed"
+            element={
+              <RequireAuth>
+                <Feed />
+              </RequireAuth>
+            }
+          />
         </Routes>
         <About />
         <ToastContainer />

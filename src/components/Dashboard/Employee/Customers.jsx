@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 const Customers = () => {
   const token = localStorage.getItem("token");
   const [customers, setCusomers] = useState(null);
+  const [isNotifyDisabled, setIsNotifyDisabled] = useState(false);
 
   useEffect(() => {
     axios
@@ -33,6 +34,20 @@ const Customers = () => {
         console.log(error);
       });
   });
+
+  const notify = (email) => {
+    setIsNotifyDisabled(true);
+    axios
+      .get(`http://localhost:8080/notify/${email}`)
+      .then((res) => {
+        setIsNotifyDisabled(false);
+        toast.success(res.data);
+      })
+      .catch((err) => {
+        setIsNotifyDisabled(false);
+        toast.error(err.name);
+      });
+  };
 
   const deleteCustomer = (accNumber) => {
     if (!window.confirm("Are you sure to want to Delete this customer?")) {
@@ -68,7 +83,7 @@ const Customers = () => {
               <TableCell>Email</TableCell>
               <TableCell>Address</TableCell>
               <TableCell>Phone Number</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell sx={{textAlign: "center"}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,7 +97,20 @@ const Customers = () => {
                 <TableCell>{customer.phone}</TableCell>
                 <TableCell>
                   <Grid container spacing={2} direction="row">
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        disabled={isNotifyDisabled}
+                        onClick={() => {
+                          notify(customer.email);
+                          console.log("delete pressed");
+                        }}
+                      >
+                        Notify
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
                       <Button
                         variant="contained"
                         color="error"

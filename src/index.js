@@ -5,7 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import Kommunicate from "@kommunicate/kommunicate-chatbot-plugin";
 
-Kommunicate.init("a68fc91d61c634315b7ad3065a1823d4", {
+Kommunicate.init("1c8c0569c0ed0f6e95f9934341ad2300c", {
   automaticChatOpenOnNavigation: true,
   popupWidget: true,
 });
