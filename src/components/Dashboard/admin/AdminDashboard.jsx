@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import AllEmployees from "./AllEmployees";
 import Customers from "../Employee/Customers";
 import UserAccounts from "../Employee/UserAccounts";
+import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [isEmployeePressed, setIsEmployeePressed] = useState(true);
@@ -10,7 +11,7 @@ const AdminDashboard = () => {
   const [isAllAccountsPressed, setIsAllAccountsPressed] = useState(false);
 
   return (
-    <div>
+    <div classname="image">
       <div>
         <Button
           variant={isEmployeePressed === true ? "contained" : "outlined"}

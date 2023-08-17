@@ -26,7 +26,6 @@ const Customers = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCusomers(res.data);
       })
       .catch((error) => {
@@ -45,7 +44,7 @@ const Customers = () => {
       })
       .catch((err) => {
         setIsNotifyDisabled(false);
-        toast.error(err.name);
+        toast.error(`${err.name}: Please register through our Axis Rural Connect website if you haven't yet.`);
       });
   };
 
@@ -72,7 +71,7 @@ const Customers = () => {
   };
 
   return (
-    <div style={{ marginBottom: "3rem" }}>
+    <div style={{ marginBottom: "3rem" }} className="admin_image">
       {customers ? (
         <Table>
           <TableHead>

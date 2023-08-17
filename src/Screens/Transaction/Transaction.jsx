@@ -56,7 +56,7 @@ const Transaction = () => {
         toast.error(error);
         console.log(error);
       });
-  }, []);
+  });
 
   const addBalanceValues = {
     username: "",

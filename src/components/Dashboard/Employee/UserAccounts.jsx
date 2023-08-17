@@ -30,7 +30,7 @@ const UserAccounts = () => {
   }, []);
 
   return (
-    <div>
+    <div className="admin_image">
       {accounts ? (
         <Table
         className="mt-3"

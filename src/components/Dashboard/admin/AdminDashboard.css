@@ -1,6 +1,5 @@
-.admin-image {
-    height: 100%;
+.admin_image {
+    height: 30vw;
     background-image: url("../../../Assets/Images/dashboard.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-size: cover;
 }
