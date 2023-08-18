@@ -1,7 +1,7 @@
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import { products } from "../../Assets/data/enums";
+import { news, products } from "../../Assets/data/enums";
 import { Link, useLocation } from "react-router-dom";
 
 import bank from "../../Assets/Images/bank.svg";
@@ -36,12 +36,33 @@ function LandingPage() {
         >
           <img src={bank} style={{ alignSelf: "center" }} />
           <Typography variant="h4" color="black" sx={{ textAlign: "left" }}>
-            {" "}
-            Products{" "}
+            Products
           </Typography>
           <div className="product-container-wrapper">
             <div className="product-container">
               {products.map((item) => {
+                return (
+                  <Product
+                    key={item.id}
+                    component={Link}
+                    to={item.to}
+                    className="card"
+                  >
+                    <CardMedia>{item.icon}</CardMedia>
+                    <CardContent>
+                      <Typography variant="h5" color="black">
+                        {item.name}
+                      </Typography>
+                    </CardContent>
+                  </Product>
+                );
+              })}
+            </div>
+            <Typography variant="h4" color="black" sx={{ textAlign: "left" }}>
+            News
+          </Typography>
+            <div className="product-container">
+              {news.map((item) => {
                 return (
                   <Product
                     key={item.id}

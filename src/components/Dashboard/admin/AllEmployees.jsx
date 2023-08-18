@@ -44,7 +44,7 @@ const AllEmployees = () => {
       })
       .then((res) => {
         console.log(res);
-        toast.error(res.data);
+        toast.success(res.data);
       });
   };
 
