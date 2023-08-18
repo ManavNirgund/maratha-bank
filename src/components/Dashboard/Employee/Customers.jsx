@@ -44,7 +44,7 @@ const Customers = () => {
       })
       .catch((err) => {
         setIsNotifyDisabled(false);
-        toast.error(`${err.name}: Please register through our Axis Rural Connect website if you haven't yet.`);
+        toast.error(`${err.name}: Customer may not have regitered through our Axis Rural Connect website.`);
       });
   };
 
